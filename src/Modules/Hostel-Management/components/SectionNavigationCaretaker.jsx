@@ -4,6 +4,7 @@ import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import ManageLeaveRequest from "./caretaker/ManageLeaverequest";
 import ManageGuestRoomRequest from "./caretaker/MangeGuestRoom";
 import ManageFines from "./caretaker/ManageFines";
+import ImposeFine from "./caretaker/ImposeFine";
 
 const sections = [
   "Manage Leave Request",
@@ -22,6 +23,7 @@ const sectionComponents = {
   "Manage Leave Request": ManageLeaveRequest,
   "Mange Guest Room Request": ManageGuestRoomRequest,
   "Manage Imposed Fine": ManageFines,
+  "Impose Fine": ImposeFine,
 
   // Add other components here for different sections if needed
   // 'My Fine': MyFineComponent,
