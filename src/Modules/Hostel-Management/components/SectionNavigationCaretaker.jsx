@@ -3,6 +3,7 @@ import { Group, Text, Box, Container } from "@mantine/core";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import ManageLeaveRequest from "./caretaker/ManageLeaverequest";
 import ManageGuestRoomRequest from "./caretaker/MangeGuestRoom";
+import ManageFines from "./caretaker/ManageFines";
 
 const sections = [
   "Manage Leave Request",
@@ -20,6 +21,7 @@ const subSections = {
 const sectionComponents = {
   "Manage Leave Request": ManageLeaveRequest,
   "Mange Guest Room Request": ManageGuestRoomRequest,
+  "Manage Imposed Fine": ManageFines,
 
   // Add other components here for different sections if needed
   // 'My Fine': MyFineComponent,
