@@ -5,13 +5,15 @@ import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import { setActiveTab_, setCurrentModule } from "../../../redux/moduleslice";
 import NoticeBoardWardenCaretaker from "./all-actors/NoticeBoardWardenCaretaker";
 import StudentInfo from "./all-actors/StudentInfo";
+import Rooms from "./warden/Rooms";
 
-const sections = ["Notice Board", "Students and Rooms Info"];
+const sections = ["Notice Board", "Students and Rooms Info", "Rooms"];
 const subSections = {};
 
 const components = {
   "Notice Board": NoticeBoardWardenCaretaker,
   "Students and Rooms Info": StudentInfo,
+  Rooms, // here
 };
 
 export default function SectionNavigationWarden() {
