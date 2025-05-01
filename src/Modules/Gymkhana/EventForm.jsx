@@ -18,6 +18,7 @@ import "./GymkhanaForms.css";
 import { DateInput, TimeInput } from "@mantine/dates";
 import { notifications } from "@mantine/notifications";
 import { host } from "../../routes/globalRoutes/index.jsx";
+import { useGetClubPositionData } from "./BackendLogic/ApiRoutes.js";
 
 function EventsApprovalForm({
   clubName,
@@ -32,7 +33,8 @@ function EventsApprovalForm({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [formPreviewData, setFormPreviewData] = useState(null);
-
+  const { data: CurrentLogginedRelatedClub = [] } =
+    useGetClubPositionData(token);
   const form = useForm({
     initialValues: initialValues || {
       event_name: "",
@@ -65,6 +67,10 @@ function EventsApprovalForm({
       start_date: (value) => (!value ? "Start date cannot be empty" : null),
     },
   });
+  const FICName =
+    CurrentLogginedRelatedClub.find(
+      (c) => c.club === clubName && c.position === "FIC",
+    )?.name || null;
   const mutation = useMutation({
     mutationFn: (newEventData) => {
       return axios.put(`${host}/gymkhana/api/new_event/`, newEventData, {
@@ -84,9 +90,9 @@ function EventsApprovalForm({
 
       // Prepare FormData for file forwarding
       const forwardFormData = new FormData();
-      forwardFormData.append("receiver", "atul");
-      forwardFormData.append("receiver_designation", "Professor");
-      forwardFormData.append("remarks", "Approved by FIC");
+      forwardFormData.append("receiver", FICName);
+      forwardFormData.append("receiver_designation", "FIC");
+      forwardFormData.append("remarks", "Approved by Co-ordinator");
       forwardFormData.append(
         "file_extra_JSON",
         JSON.stringify({
@@ -136,8 +142,8 @@ function EventsApprovalForm({
       // First, create the file by hitting the filetracking API:
       const fileFormData = new FormData();
       fileFormData.append("designation", "co-ordinator");
-      fileFormData.append("receiver_username", "atul");
-      fileFormData.append("receiver_designation", "Professor");
+      fileFormData.append("receiver_username", FICName);
+      fileFormData.append("receiver_designation", "FIC");
       fileFormData.append("subject", values.event_name || "event_name");
       fileFormData.append("description", values.details || "details");
       fileFormData.append("src_module", "Gymkhana");

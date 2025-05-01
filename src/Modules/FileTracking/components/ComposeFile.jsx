@@ -31,6 +31,7 @@ axios.defaults.withCredentials = true;
 export default function Compose() {
   const [files, setFiles] = React.useState([]);
   const [usernameSuggestions, setUsernameSuggestions] = React.useState([]);
+  const username = useSelector((state) => state.user.roll_no);
   const [receiver_username, setReceiverUsername] = React.useState("");
   const [receiver_designation, setReceiverDesignation] = React.useState("");
   const [receiver_designations, setReceiverDesignations] = React.useState("");
@@ -44,8 +45,10 @@ export default function Compose() {
   let module = useSelector((state) => state.module.current_module);
   module = module.split(" ").join("").toLowerCase();
   const uploaderRole = useSelector((state) => state.user.role);
-  const [designation, setDesignation] = React.useState(uploaderRole);
-  const options = roles.map((role) => ({ value: role, label: role }));
+  const [designation, setDesignation] = React.useState("");
+  const options = Array.isArray(roles)
+    ? roles.map((role) => ({ value: role, label: role }))
+    : [];
   const receiverRoles = Array.isArray(receiver_designations)
     ? receiver_designations.map((role) => ({
         value: role,
@@ -205,6 +208,7 @@ export default function Compose() {
       formData.append("receiver_username", receiver_username);
       formData.append("receiver_designation", receiver_designation);
       formData.append("src_module", module);
+      formData.append("remarks", remarks);
       const response = await axios.post(`${createFileRoute}`, formData, {
         headers: {
           Authorization: `Token ${token}`,
@@ -342,8 +346,8 @@ export default function Compose() {
             </Button>
           </Group>
         )}
-        <Grid mb="sm" gutter="md" align="flex-start">
-          <Grid.Col span={{ base: 12, sm: 6 }}>
+        <Grid mb="sm" gutter="auto" align="flex-start">
+          <Grid.Col span={{ base: 12, sm: 6, md: 6 }}>
             <Box style={{ height: "100%", width: "98.5%", marginLeft: "8px" }}>
               <Autocomplete
                 label="Send To"
@@ -376,7 +380,7 @@ export default function Compose() {
                 value={receiver_designation}
                 data={receiverRoles}
                 onChange={(value) => setReceiverDesignation(value)}
-                onClick={() => fetchRoles()} // only triggers on click
+                onClick={() => fetchRoles()}
                 searchable
                 nothingFound="No designations found"
                 styles={(theme) => ({
@@ -419,9 +423,11 @@ export default function Compose() {
         <Text weight={600} mb="ls">
           Do you want to send this file?
         </Text>
-        <Text mb="ls">Sender: ({designation})</Text>
+        <Text mb="ls">
+          Sender: {username}[{designation}]{" "}
+        </Text>
         <Text mb="md">
-          Receiver: {receiver_username} ({receiver_designation})
+          Receiver: {receiver_username} [{receiver_designation}]
         </Text>
         <Group justify="center" gap="xl" style={{ width: "100%" }}>
           <Button

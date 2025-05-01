@@ -16,6 +16,7 @@ import axios from "axios";
 import "./GymkhanaForms.css";
 import { notifications } from "@mantine/notifications";
 import { host } from "../../routes/globalRoutes/index.jsx";
+import { useGetClubPositionData } from "./BackendLogic/ApiRoutes.js";
 
 function BudgetApprovalForm({
   clubName,
@@ -30,7 +31,8 @@ function BudgetApprovalForm({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [formPreviewData, setFormPreviewData] = useState(null);
-
+  const { data: CurrentLogginedRelatedClub = [] } =
+    useGetClubPositionData(token);
   // Set up the form with initial values and validation
   const form = useForm({
     initialValues: initialValues || {
@@ -58,7 +60,10 @@ function BudgetApprovalForm({
       budget_file: (value) => (!value ? "You must attach a PDF" : null), // File validation
     },
   });
-
+  const FICName =
+    CurrentLogginedRelatedClub.find(
+      (c) => c.club === clubName && c.position === "FIC",
+    )?.name || null;
   // Mutation setup for submitting the form data via API
   const mutation = useMutation({
     mutationFn: (newBudgetData) => {
@@ -83,15 +88,14 @@ function BudgetApprovalForm({
     onSuccess: async (response) => {
       console.log("Successfully submitted budget:", response.data);
       setSuccessMessage("Budget submission successful!");
-
       // Assume response.data.file_id is returned from the budget API
       const fileId = response.data.file_id;
 
       // Prepare forwarding FormData (similar to event form)
       const forwardFormData = new FormData();
-      forwardFormData.append("receiver", "atul");
-      forwardFormData.append("receiver_designation", "Professor");
-      forwardFormData.append("remarks", "Approved by FIC");
+      forwardFormData.append("receiver", FICName);
+      forwardFormData.append("receiver_designation", "FIC");
+      forwardFormData.append("remarks", "Approved by Co-ordinator");
       forwardFormData.append(
         "file_extra_JSON",
         JSON.stringify({
@@ -136,8 +140,8 @@ function BudgetApprovalForm({
     try {
       const fileFormData = new FormData();
       fileFormData.append("designation", "co-ordinator");
-      fileFormData.append("receiver_username", "atul");
-      fileFormData.append("receiver_designation", "Professor");
+      fileFormData.append("receiver_username", FICName);
+      fileFormData.append("receiver_designation", "FIC");
       fileFormData.append("subject", values.budget_for || "budget_for");
       fileFormData.append("description", values.description || "description");
       fileFormData.append("src_module", "Gymkhana");

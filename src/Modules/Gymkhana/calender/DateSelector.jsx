@@ -8,8 +8,9 @@ function DateSelector({ selectedDate, setSelectedDate }) {
   return (
     <Box
       style={{
-        width: "300px",
-        paddingRight: isMobile ? "2px" : "400px",
+        width: "400px",
+        height: "400px",
+        paddingRight: isMobile ? "2px" : "200px",
         marginLeft: isMobile ? "10px" : "1px",
       }}
     >
@@ -18,7 +19,7 @@ function DateSelector({ selectedDate, setSelectedDate }) {
         value={selectedDate}
         onChange={setSelectedDate}
         style={{
-          width: "150px",
+          width: "250px",
         }}
       />
     </Box>

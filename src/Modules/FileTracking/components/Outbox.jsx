@@ -160,6 +160,8 @@ export default function Outboxfunc() {
             mb="md"
             style={{
               fontSize: "26px",
+              textAlign: "center",
+              width: "100%",
             }}
           >
             {selectedFile.subject}
@@ -207,7 +209,7 @@ export default function Outboxfunc() {
                 <tr style={{ backgroundColor: "#0000" }}>
                   {[
                     { key: "id", label: "File ID" },
-                    { key: "sent_to", label: "Sent to" },
+                    { key: "currently_under", label: "Currently under" },
                     { key: "subject", label: "Subject" },
                     { key: "upload_date", label: "Date" },
                     { key: "uploader", label: "Created by" },
@@ -276,7 +278,7 @@ export default function Outboxfunc() {
                           height: "36px",
                         }}
                       >
-                        {file.receiver}({file.receiver_designation})
+                        {file.receiver}[{file.receiver_designation}]
                       </td>
                       <td
                         style={{
@@ -306,7 +308,7 @@ export default function Outboxfunc() {
                           height: "36px",
                         }}
                       >
-                        {file.uploader}
+                        {file.uploader}[{file.uploader_designation}]
                       </td>
                       <td
                         style={{

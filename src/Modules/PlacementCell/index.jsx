@@ -37,6 +37,24 @@ const studentTabs = [
   },
 ];
 
+const defaultTabs = [
+  {
+    value: "schedule",
+    label: "Placement Schedule",
+    component: <PlacementSchedule />,
+  },
+  {
+    value: "stats",
+    label: "Placement Stats",
+    component: <PlacementRecordsTable />,
+  },
+  {
+    value: "placement-calendar",
+    label: "Placement Calendar",
+    component: <PlacementCalendar />,
+  },
+];
+
 const chairmanTabs = [
   {
     value: "schedule",
@@ -170,7 +188,7 @@ function PlacementCellPage() {
         ? chairmanTabs
         : role === "placement officer"
           ? tpoTabs
-          : [];
+          : defaultTabs;
 
   const handleTabChange = () => {}; // This is temporarily empty to avoid eslint error, Module team needs to implement this!
 

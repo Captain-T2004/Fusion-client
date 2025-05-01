@@ -62,7 +62,7 @@ export default function ArchiveFiles() {
           },
         );
         setFiles(response.data);
-        console.log("Archived Files: ", files);
+        console.log("Archived Files: ", response.data);
         // Set the response data to the files state
       } catch (err) {
         console.error("Error fetching files:", err);
@@ -188,6 +188,8 @@ export default function ArchiveFiles() {
             mb="md"
             style={{
               fontSize: "26px",
+              textAlign: "center",
+              width: "100%",
             }}
           >
             {selectedFile.subject}
@@ -302,7 +304,9 @@ export default function ArchiveFiles() {
                       <td style={tableStyles}>
                         {convertDate(file.upload_date)}
                       </td>
-                      <td style={tableStyles}>{file.uploader}</td>
+                      <td style={tableStyles}>
+                        {file.uploader}[{file.uploader_designation}]
+                      </td>
                       <td style={tableStyles}>
                         <ActionIcon
                           variant="outline"

@@ -42,8 +42,8 @@ function EventCalendar({ selectedDate, selectedClub, events }) {
           style={{
             border: "1px solid #ddd",
             padding: isMobile ? "2px" : "10px",
-            minHeight: isMobile ? "25px" : "110px", // Increase height
-            minWidth: isMobile ? "25px" : "110px", // Increase width
+            minHeight: isMobile ? "25px" : "80px", // Increase height
+            minWidth: isMobile ? "25px" : "80px", // Increase width
             backgroundColor: "white", // Set background color to white
             borderRadius: "5px",
             boxShadow: "0 1px 3px rgba(0, 0, 0, 0.2)", // Optional: add shadow for better visibility
