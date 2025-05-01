@@ -63,10 +63,12 @@ export default function ImposeFine() {
 
   const filteredStudents = students.filter(
     (student) =>
-      student.id__user__username
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
-      student.room_no.toLowerCase().includes(searchTerm.toLowerCase()),
+      (student.id__user__username &&
+        student.id__user__username
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())) ||
+      (student.room_no &&
+        student.room_no.toLowerCase().includes(searchTerm.toLowerCase())),
   );
 
   const handleImposeFine = async () => {
